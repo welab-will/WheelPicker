@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,7 +25,9 @@ public class WheelPicker extends View {
 	private float mTextWidth;
 	private float mTextHeight;
 
+	private static final String TAG = WheelPicker.class.getSimpleName();
 	private float mTextPadding = 15.0f;
+	private float mTouchYOffset = 0;
 
 	public WheelPicker(Context context) {
 		super(context);
@@ -94,7 +97,7 @@ public class WheelPicker extends View {
 			mExampleDrawable.draw(canvas);
 		}
 		*/
-		int y = 0;
+		int y = (int) mTouchYOffset;
 		for(int i = 2016; i >= 2000; i--) {
 			String str = Integer.toString(i);
 
@@ -110,10 +113,29 @@ public class WheelPicker extends View {
 		}
 	}
 
+	private float actionDownY;
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		System.out.println("event: x=" + event.getX() + ",y=" + event.getY());
-		return super.onTouchEvent(event);
-	}
+		int action = event.getAction();
 
+		switch (action)
+		{
+			case MotionEvent.ACTION_DOWN:
+				Log.e(TAG, "onTouchEvent ACTION_DOWN");
+				actionDownY = event.getY();
+				break;
+			case MotionEvent.ACTION_MOVE:
+				mTouchYOffset = event.getY() - actionDownY;
+				Log.e(TAG, "onTouchEvent ACTION_MOVE:" + mTouchYOffset);
+				invalidate();
+				break;
+			case MotionEvent.ACTION_UP:
+				Log.e(TAG, "onTouchEvent ACTION_UP");
+				break;
+			default:
+				break;
+		}
+		return true;
+	}
 }
