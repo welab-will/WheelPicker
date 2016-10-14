@@ -27,7 +27,9 @@ public class WheelPicker extends View {
 
 	private static final String TAG = WheelPicker.class.getSimpleName();
 	private float mTextPadding = 15.0f;
-	private float mTouchYOffset = 0;
+	private float mYOffset = 0f;
+
+	private Paint mLinePaint;
 
 	public WheelPicker(Context context) {
 		super(context);
@@ -65,6 +67,9 @@ public class WheelPicker extends View {
 		mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 		mTextPaint.setTextAlign(Paint.Align.LEFT);
 
+		mLinePaint = new Paint();
+		mLinePaint.setColor(Color.RED);
+
 		// Update TextPaint and text measurements from attributes
 		invalidateTextPaintAndMeasurements();
 	}
@@ -97,7 +102,8 @@ public class WheelPicker extends View {
 			mExampleDrawable.draw(canvas);
 		}
 		*/
-		int y = (int) mTouchYOffset;
+
+		int y = 0;
 		for(int i = 2016; i >= 2000; i--) {
 			String str = Integer.toString(i);
 
@@ -111,9 +117,46 @@ public class WheelPicker extends View {
 
 			y += (mTextHeight + mTextPadding);
 		}
+		/*测试代码
+//		abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+		String textString = "2016Jajmrg";
+//		测量文字高度
+		mTextWidth = mTextPaint.measureText(textString);
+
+
+		Rect rect = new Rect();
+		mTextPaint.getTextBounds(textString, 0, textString.length(), rect);
+
+//		rect.offset(50, 200);
+		rect.offsetTo(50, 200);
+
+		mLinePaint.setStyle(Paint.Style.STROKE);
+//		canvas.drawRect(rect, mLinePaint);
+
+		Paint.FontMetrics pfm = mTextPaint.getFontMetrics();
+
+		canvas.drawLine(50, 200 + pfm.top, 50 + rect.width(), 200 + pfm.top, mLinePaint);
+		canvas.drawLine(50, 200 + pfm.ascent, 50 + rect.width(), 200 + pfm.ascent, mLinePaint);
+		canvas.drawLine(50, 200, 50 + rect.width(), 200, mLinePaint);
+		canvas.drawLine(50, 200 + pfm.descent, 50 + rect.width(), 200 + pfm.descent, mLinePaint);
+		canvas.drawLine(50, 200 + pfm.bottom, 50 + rect.width(), 200 + pfm.bottom, mLinePaint);
+		canvas.drawLine(50, 200 + pfm.leading, 50 + rect.width(), 200 + pfm.leading, mLinePaint);
+
+//		canvas.drawRect(50 + rect.left, 200 + rect.top, 50 + rect.left + rect.width(), 200 + rect.top + rect.height(), mLinePaint);
+//		左
+		canvas.drawLine(50 + rect.left, 200 + rect.top, 50 + rect.left, 200 + rect.top + rect.height(), mLinePaint);
+//		上
+		canvas.drawLine(50 + rect.left, 200 + rect.top, 50 + rect.left + rect.width(), 200 + rect.top, mLinePaint);
+//		下
+		canvas.drawLine(50 + rect.left, 200 + rect.top + rect.height(), 50 + rect.left + rect.width(), 200 + rect.top + rect.height(), mLinePaint);
+//		右
+		canvas.drawLine(50 + rect.left + rect.width(), 200 + rect.top, 50 + rect.left + rect.width(), 200 + rect.top + rect.height(), mLinePaint);
+
+		canvas.drawText(textString, 50, 200, mTextPaint);
+		*/
 	}
 
-	private float actionDownY;
+	private float lastY;
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -123,15 +166,16 @@ public class WheelPicker extends View {
 		{
 			case MotionEvent.ACTION_DOWN:
 				Log.e(TAG, "onTouchEvent ACTION_DOWN");
-				actionDownY = event.getY();
+				lastY = event.getY();
 				break;
 			case MotionEvent.ACTION_MOVE:
-				mTouchYOffset = event.getY() - actionDownY;
-				Log.e(TAG, "onTouchEvent ACTION_MOVE:" + mTouchYOffset);
-				invalidate();
+				mYOffset =event.getY() - lastY;
+				scrollBy(0, -(int) mYOffset);
+				lastY = event.getY();
 				break;
 			case MotionEvent.ACTION_UP:
 				Log.e(TAG, "onTouchEvent ACTION_UP");
+				lastY = 0f;
 				break;
 			default:
 				break;
