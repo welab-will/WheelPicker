@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<quan.will.wheelpicker.ScrollLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    tools:context=".MainActivity"
+                                    android:background="@android:color/darker_gray">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clicked"
+        android:text="第一个TextView"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clicked"
+        android:text="第二个TextView"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clicked"
+        android:textColor="@android:color/white"
+        android:text="第三个TextView"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clicked"
+        android:text="第四个TextView"/>
+
+</quan.will.wheelpicker.ScrollLayout>
