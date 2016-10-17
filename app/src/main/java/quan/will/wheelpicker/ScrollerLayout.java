@@ -112,20 +112,30 @@ public class ScrollerLayout extends ViewGroup {
 				int targetItemIndex = 0;
 //				滚动超过一半并且不是最后一个
 				if (ratio - currentItemIndex >= 0.5) {
-					targetItemIndex ++;
+					targetItemIndex = currentItemIndex + 1;
 				} else {
 					targetItemIndex = currentItemIndex;
 				}
 
-				if (targetItemIndex > 0 && targetItemIndex < getChildCount()) {
-					View targetChild = getChildAt(targetItemIndex);
-					int dx = getScrollX() - targetChild.getLeft();
-					int dy = 0;
-					mScroller.startScroll((int)event.getX(), (int)event.getY(), dx, dy);
-					invalidate();
+				if (targetItemIndex < 0 || targetItemIndex >= getChildCount()) {
+					targetItemIndex = currentItemIndex;
 				}
+
+				View targetChild = getChildAt(targetItemIndex);
+				int dx = getScrollX() - targetChild.getLeft();
+				int dy = 0;
+				mScroller.startScroll(getScrollX(), 0, -dx, dy);
+				invalidate();
 				break;
 		}
 		return true;
+	}
+
+	@Override
+	public void computeScroll() {
+		if (mScroller.computeScrollOffset()) {
+			scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+			invalidate();
+		}
 	}
 }
