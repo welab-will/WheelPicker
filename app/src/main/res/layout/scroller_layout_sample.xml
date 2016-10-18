@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<quan.will.wheelpicker.ScrollerLayout
+<quan.will.wheelpicker.ScrollerLayout4
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray">
 
     <Button
         android:layout_width="match_parent"
@@ -25,4 +26,4 @@
         android:layout_height="wrap_content"
         android:text="第四个"/>
 
-</quan.will.wheelpicker.ScrollerLayout>
+</quan.will.wheelpicker.ScrollerLayout4>
