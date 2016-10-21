@@ -12,6 +12,7 @@ import android.view.ViewGroup;
  * Created by welab on 2016/10/17.
  * 基于ViewDragHelper实现
  * ViewDragHelper是拖动视图的方法
+ * ViewFlipper GestureDetector Animation
  */
 
 public class ScrollerLayout4 extends ViewGroup {
