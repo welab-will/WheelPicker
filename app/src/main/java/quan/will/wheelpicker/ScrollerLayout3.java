@@ -13,7 +13,7 @@ import android.widget.Scroller;
 
 /**
  * Created by welab on 2016/10/18.
- * 尝试用getRawX() getRawY
+ * offsetLeftAndRight 测试
  */
 
 public class ScrollerLayout3 extends ViewGroup {
