@@ -14,7 +14,7 @@ import android.widget.Scroller;
 
 /**
  * Created by welab on 2016/10/19.
- * Gesture实现-没有onUp回调，所以实现不了滑动结束之后的，自动滑动功能
+ * Gesture实现
  */
 
 public class ScrollerLayout5 extends ViewGroup implements GestureDetector.OnGestureListener {
@@ -101,34 +101,28 @@ public class ScrollerLayout5 extends ViewGroup implements GestureDetector.OnGest
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		mGestureDetector.onTouchEvent(event);
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				Log.d(TAG, "onTouchEvent ACTION_DOWN");
-				break;
-			case MotionEvent.ACTION_MOVE:
-				Log.d(TAG, "onTouchEvent ACTION_MOVE");
-				scrollBy(mLastX - (int) event.getX(), 0);
-				mLastX = (int) event.getX();
-				break;
-			case MotionEvent.ACTION_UP:
-				Log.d(TAG, "onTouchEvent ACTION_UP");
-				float ratio = (float)getScrollX() / (float)getWidth();
-				int currentItemIndex = getCurrentItemIndex();
-				int targetItemIndex = 0;
+		boolean handled = mGestureDetector.onTouchEvent(event);
+		if (!handled) {
+			switch (event.getAction()) {
+				case MotionEvent.ACTION_UP:
+					Log.d(TAG, "onTouchEvent ACTION_UP");
+					float ratio = (float)getScrollX() / (float)getWidth();
+					int currentItemIndex = (int) ratio;
+					int targetItemIndex = 0;
 //				滚动超过一半并且不是最后一个
-				if (ratio - currentItemIndex >= 0.5) {
-					targetItemIndex = currentItemIndex + 1;
-				} else {
-					targetItemIndex = currentItemIndex;
-				}
+					if (ratio - currentItemIndex >= 0.5) {
+						targetItemIndex = currentItemIndex + 1;
+					} else {
+						targetItemIndex = currentItemIndex;
+					}
 
-				if (targetItemIndex < 0 || targetItemIndex >= getChildCount()) {
-					targetItemIndex = currentItemIndex;
-				}
+					if (targetItemIndex < 0 || targetItemIndex >= getChildCount()) {
+						targetItemIndex = currentItemIndex;
+					}
 
-				showItemAt(targetItemIndex);
-				break;
+					showItemAt(targetItemIndex);
+					break;
+			}
 		}
 		return true;
 	}
@@ -144,7 +138,7 @@ public class ScrollerLayout5 extends ViewGroup implements GestureDetector.OnGest
 
 	private void showNextItem() {
 
-		int currentItemIndex = getCurrentItemIndex();
+		int currentItemIndex = getScrollX() / getWidth();
 		int targetItemIndex = currentItemIndex + 1;
 
 		if (targetItemIndex < 0 || targetItemIndex >= getChildCount()) {
@@ -154,7 +148,7 @@ public class ScrollerLayout5 extends ViewGroup implements GestureDetector.OnGest
 	}
 
 	private void showLastItem() {
-		int currentItemIndex = getCurrentItemIndex();
+		int currentItemIndex = getScrollX() / getWidth() + 1;
 		int targetItemIndex = currentItemIndex - 1;
 
 		if (targetItemIndex < 0 || targetItemIndex >= getChildCount()) {
@@ -162,13 +156,6 @@ public class ScrollerLayout5 extends ViewGroup implements GestureDetector.OnGest
 		}
 		showItemAt(targetItemIndex);
 	}
-
-	private int getCurrentItemIndex() {
-		float ratio = (float)getScrollX() / (float)getWidth();
-		int currentItemIndex = (int) ratio;
-		return currentItemIndex;
-	}
-
 
 	@Override
 	public void computeScroll() {
@@ -197,7 +184,7 @@ public class ScrollerLayout5 extends ViewGroup implements GestureDetector.OnGest
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		Log.d("onScroll", e1.toString() + e2.toString());
 		scrollBy((int) distanceX, 0);
-		return false;
+		return true;
 	}
 
 	@Override
@@ -211,6 +198,6 @@ public class ScrollerLayout5 extends ViewGroup implements GestureDetector.OnGest
 			showNextItem();
 		else
 			showLastItem();
-		return false;
+		return true;
 	}
 }
