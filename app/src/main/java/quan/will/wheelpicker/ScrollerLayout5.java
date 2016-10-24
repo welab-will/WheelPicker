@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Scroller;
 
 /**
@@ -52,7 +52,8 @@ public class ScrollerLayout5 extends ViewGroup implements GestureDetector.OnGest
 		ViewConfiguration vc = ViewConfiguration.get(getContext());
 		mTouchSlop = vc.getScaledTouchSlop();
 
-		mScroller = new Scroller(getContext(), new AccelerateDecelerateInterpolator());
+		mScroller = new Scroller(getContext(), new AccelerateInterpolator());
+//		mScroller = new Scroller(getContext(), new AccelerateDecelerateInterpolator());
 
 		mGestureDetector = new GestureDetector(getContext(), this);
 	}

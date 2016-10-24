@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Scroller;
 
 /**
@@ -52,7 +51,7 @@ public class ScrollerLayout6 extends ViewGroup implements GestureDetector.OnGest
 		ViewConfiguration vc = ViewConfiguration.get(getContext());
 		mTouchSlop = vc.getScaledTouchSlop();
 
-		mScroller = new Scroller(getContext(), new AccelerateDecelerateInterpolator());
+		mScroller = new Scroller(getContext());
 
 		mGestureDetector = new GestureDetector(getContext(), this);
 	}
@@ -196,26 +195,32 @@ public class ScrollerLayout6 extends ViewGroup implements GestureDetector.OnGest
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
-		Log.d(TAG, "onFling");
-
-		float ratio = (float)getScrollX() / (float)getWidth();
-		int currentItemIndex = (int) ratio;
+		if(velocityX < 0) {
+			Log.d(TAG, "onFling");
+			float ratio = (float)getScrollX() / (float)getWidth();
+			int currentItemIndex = (int) ratio;
 //		滚动超过一半并且不是最后一个
-		int targetItemIndex = currentItemIndex + 1;
+			int targetItemIndex = currentItemIndex + 1;
 
-		if (targetItemIndex < 0 || targetItemIndex >= getChildCount()) {
-			targetItemIndex = currentItemIndex;
+			if (targetItemIndex < 0 || targetItemIndex >= getChildCount()) {
+				targetItemIndex = currentItemIndex;
+			}
+			View targetChild = getChildAt(targetItemIndex);
+			mScroller.fling(getScrollX(), 0, -(int) velocityX, (int)velocityY, getScrollX(), targetChild.getLeft() + 1000*10, 0, 0);
+			invalidate();
+		} else {
+			float ratio = (float)getScrollX() / (float)getWidth();
+			int currentItemIndex = (int) ratio;
+//		滚动超过一半并且不是最后一个
+			int targetItemIndex = currentItemIndex;
+
+			if (targetItemIndex >= 0 && targetItemIndex < getChildCount()) {
+				View targetChild = getChildAt(targetItemIndex);
+//				需要将起始点、速度、滑动的最短距离、最长距离作为参数传递进去。
+				mScroller.fling(getScrollX(), 0, -(int)velocityX, (int)velocityY, getScrollX(), targetChild.getLeft(), 0, 0);
+				invalidate();
+			}
 		}
-		View targetChild = getChildAt(targetItemIndex);
-		mScroller.fling(getScrollX(), 0, -(int)velocityX, (int)velocityY, getScrollX(), targetChild.getLeft(), 0, 0);
-		invalidate();
-		/*
-		if(velocityX < 0)
-			showNextItem();
-		else
-			showLastItem();
-		*/
 		return true;
 	}
 }
