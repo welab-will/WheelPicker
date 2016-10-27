@@ -206,7 +206,7 @@ public class ScrollerLayout6 extends ViewGroup implements GestureDetector.OnGest
 				targetItemIndex = currentItemIndex;
 			}
 			View targetChild = getChildAt(targetItemIndex);
-			mScroller.fling(getScrollX(), 0, -(int) velocityX, (int)velocityY, getScrollX(), targetChild.getLeft() + 1000*10, 0, 0);
+			mScroller.fling(getScrollX(), 0, -(int) velocityX, (int)velocityY, getScrollX(), targetChild.getLeft(), 0, 0);
 			invalidate();
 		} else {
 			float ratio = (float)getScrollX() / (float)getWidth();
