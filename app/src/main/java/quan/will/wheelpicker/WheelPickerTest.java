@@ -14,9 +14,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * TODO: 滚轮选择器.
+ * 滚轮选择器.
  */
-public class WheelPicker extends View {
+public class WheelPickerTest extends View {
 	private int mExampleColor = Color.RED; // TODO: use a default from R.color...
 	private float mExampleDimension = 0; // TODO: use a default from R.dimen...
 	private Drawable mExampleDrawable;
@@ -25,23 +25,23 @@ public class WheelPicker extends View {
 	private float mTextWidth;
 	private float mTextHeight;
 
-	private static final String TAG = WheelPicker.class.getSimpleName();
+	private static final String TAG = WheelPickerTest.class.getSimpleName();
 	private float mTextPadding = 15.0f;
 	private float mYOffset = 0f;
 
 	private Paint mLinePaint;
 
-	public WheelPicker(Context context) {
+	public WheelPickerTest(Context context) {
 		super(context);
 		init(null, 0);
 	}
 
-	public WheelPicker(Context context, AttributeSet attrs) {
+	public WheelPickerTest(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(attrs, 0);
 	}
 
-	public WheelPicker(Context context, AttributeSet attrs, int defStyle) {
+	public WheelPickerTest(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(attrs, defStyle);
 	}

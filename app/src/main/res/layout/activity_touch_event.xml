@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<quan.will.wheelpicker.touch.TouchEventLayout1
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    tools:context="quan.will.wheelpicker.TouchEventActivity">
+
+    <quan.will.wheelpicker.touch.TouchEventLayout2
+        android:id="@+id/layout2"
+        android:layout_width="340dp"
+        android:layout_height="360dp"
+        android:layout_centerInParent="true"
+        android:background="@android:color/white">
+
+        <quan.will.wheelpicker.touch.TouchEventLayout3
+            android:id="@+id/layout3"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/darker_gray">
+
+            <quan.will.wheelpicker.touch.TouchEventLayout4
+                android:id="@+id/layout4"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true"
+                android:background="@android:color/background_dark"/>
+        </quan.will.wheelpicker.touch.TouchEventLayout3>
+    </quan.will.wheelpicker.touch.TouchEventLayout2>
+</quan.will.wheelpicker.touch.TouchEventLayout1>

@@ -7,12 +7,19 @@
     android:layout_height="match_parent"
     tools:context="quan.will.wheelpicker.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"/>
+
+    <quan.will.wheelpicker.impl.WheelView
         android:id="@+id/recycler_view"
+        android:layout_below="@id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:background="@color/colorAccent">
+        android:background="@android:color/white"
+        android:scrollbars="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+    </quan.will.wheelpicker.impl.WheelView>
 </RelativeLayout>
